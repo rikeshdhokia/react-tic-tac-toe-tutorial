@@ -17,7 +17,6 @@ class App extends Component {
           <Board />
         </div>
       </div>
-
     );
   }
 }
@@ -54,10 +53,17 @@ class Board extends React.Component {
 }
 
 class Square extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: null,
+    };
+  }
+
   render() {
     return (
-      <button className="square" onClick={() => alert('clicked on' + this.props.value)}>
-        {this.props.value}
+      <button className="square" onClick={() => this.setState({value: 'X'})}>
+        {this.state.value}
       </button>
     );
   }
