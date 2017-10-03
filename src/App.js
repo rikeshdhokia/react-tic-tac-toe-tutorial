@@ -3,27 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div className="game-board">
-          <Board />
-        </div>
-      </div>
-    );
-  }
-}
-
-class Board extends React.Component {
-
-  constructor() {
+  constructor(){
     super();
     this.state = {
       squares: Array(9).fill(null),
@@ -32,23 +12,44 @@ class Board extends React.Component {
   }
 
   handleClick(i) {
-   const squares = this.state.squares.slice();
-   if (squares[i]) {
+    const squares = this.state.squares.slice();
+    if (squares[i]) {
      return;
-   }
-   squares[i] = this.state.xIsNext ? 'X' : 'O';
-   this.setState({squares: squares, xIsNext: !this.state.xIsNext});
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({squares: squares, xIsNext: !this.state.xIsNext});
  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Tic-Tac-Toe</h1>
+        </header>
+        <div className="game-board">
+          <Board squares={this.state.squares} onClick={i=>this.handleClick(i)}/>
+        </div>
+        <div className="game-info">
+          <div>{/* status */}</div>
+          <ol>{/* TODO */}</ol>
+       </div>
+      </div>
+    );
+  }
+}
+
+class Board extends React.Component {
 
   renderSquare(i) {
     return <Square
-      value={this.state.squares[i]}
-      onClick={() => this.handleClick(i)}
+      value={this.props.squares[i]}
+      onClick={() => this.props.onClick(i)}
     />;
   }
 
   render() {
-    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    const status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
 
     return (
       <div>
